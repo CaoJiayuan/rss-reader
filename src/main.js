@@ -6,6 +6,15 @@ import router from './router'
 import axios from 'axios'
 
 axios.defaults.baseURL = process.env.RSS_HOST
+
+axios.interceptors.request.use(config => {
+  if (config.url.lastIndexOf('.json') < 0) {
+    config.url += '.json'
+  }
+
+  return config;
+}, err => Promise.reject(err))
+
 window.axios = axios
 
 Vue.config.productionTip = false
